@@ -1,4 +1,4 @@
-import imp
+import importlib.util
 import logging
 import marshal
 import ntpath
@@ -14,6 +14,7 @@ import six
 IGNORE = [
     '<install zipextimporter>.pyc',  # zip importer added by py2exe
     '<bootstrap2>.pyc',  # bootstrap added by py2exe
+    '<boot hacks>.pyc',  # boot hacks added by py2exe 
     'boot_common.py.pyc',  # boot_common added by py2exe
 ]
 
@@ -43,6 +44,10 @@ PYTHON_MAGIC_WORDS = {
     '3.5': __build_magic(3350),
     '3.6': __build_magic(3360),
     '3.7': __build_magic(3390),
+    '3.8': __build_magic(3400),
+    '3.9': __build_magic(3420),
+    '3.10': __build_magic(3430),
+    '3.11': __build_magic(3450),
 }
 
 
@@ -61,7 +66,7 @@ def __source_size(size):
 
 def __current_magic():
     """Current Python magic number."""
-    return imp.get_magic()
+    return importlib.util.MAGIC_NUMBER
 
 
 def _get_scripts_resource(pe):
